@@ -6,6 +6,7 @@ int main()
     ListNetizen LN;
     adrNetizen netizen;
     adrGroup group;
+    adrRelation member;
     infotypeNetizen dataNetizen;
     infotypeGroup dataGroup;
     int banyakData;
@@ -188,10 +189,17 @@ int main()
                 case 7: {
                 cout << "=== DELETE GROUP ===" << endl << endl;
 
-                cout << "Menghapus grup urutan pertama";
+                cout << "Menghapus grup urutan pertama" << endl;
 
                 deleteGroup(LG, group);
-                cout << info(group).title << " Berhasil dihapus" << endl;
+                // mengeluarkan seluruh member dari grup
+                member = relation(group);
+                while (member != NIL) {
+                    netizen = nextNet(member);
+                    removeMember(group, netizen);
+                    member = relation(group);
+                }
+                cout << "Grup " << info(group).title << " Berhasil dihapus" << endl;
                 break;
             }
                 case 8: {
