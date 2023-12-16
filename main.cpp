@@ -180,6 +180,14 @@ int main()
                 netizen = findNetizen(LN, id);
                 if (netizen != NIL){
                     descNetizen(netizen);
+                    // menampilkan data netizen yang menjadi member pada suatu grup tertentu
+                    group = first(LG);
+                    while (group != NIL) {
+                        if (isMember(group, netizen)) {
+                            cout << info(netizen).nama << " tergabung pada grup " << info(group).title << endl;
+                        }
+                        group = next(group);
+                    }
                 } else {
                     cout << "ID tersebut tidak ditemukan!" << endl;
                 }
