@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1702699720 source:c:\programming\c++\std_sosialmedia\main.cpp
+	"sosialmedia.h"
+
+1702698984 c:\programming\c++\std_sosialmedia\sosialmedia.h
+	<iostream>
+
+1702699930 source:c:\programming\c++\std_sosialmedia\sosialmedia.cpp
+	"sosialmedia.h"
+
