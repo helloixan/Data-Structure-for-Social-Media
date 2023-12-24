@@ -4,6 +4,7 @@
 #define NIL NULL
 #define first(L) L.first
 #define last(L) L.last
+#define prev(p) p->prev
 #define next(p) p->next
 #define info(p) p->info
 #define relation(p) p->relation
@@ -26,6 +27,7 @@ typedef struct Relation *adrRelation;
 struct elmGroup {
     infotypeGroup info;
     adrGroup next;
+    adrGroup prev;
     adrRelation relation;
 };
 struct elmNetizen {
@@ -53,9 +55,15 @@ adrNetizen createElmNetizen(infotypeNetizen X);
 adrRelation createElmRelasi(adrNetizen Netizen);
 void addGroup(ListGroup &LG, adrGroup P);
 void deleteGroup(ListGroup &LG, adrGroup &P);
+void deleteFirstGroup(ListGroup &LG, adrGroup &P);
+void deleteLastGroup(ListGroup &LG, adrGroup &P);
+void deleteAfterGroup(ListGroup &LG, adrGroup &P, adrGroup Prec);
 void addNetizen(ListNetizen &LN, adrNetizen P);
 void addMember(adrGroup &Group, adrNetizen N);
 void deleteNetizen(ListNetizen &LN, adrNetizen &P);
+void deleteFirstNetizen(ListNetizen &LN, adrNetizen &P);
+void deleteLastNetizen(ListNetizen &LN, adrNetizen &P);
+void deleteAfterNetizen(ListNetizen &LN, adrNetizen &P, adrNetizen Prec);
 void disalokasiRel(adrRelation Relasi);
 void deleteFirstRel(adrGroup &Group, adrRelation &Rel);
 void deleteAfterRel(adrGroup &Group, adrRelation &Rel, adrRelation Prec);
