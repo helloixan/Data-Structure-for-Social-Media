@@ -122,7 +122,7 @@ void deleteNetizen(ListNetizen &LN, adrNetizen &P){
     // Menghapus netizen berdasarkan letaknya
     if (P == first(LN)) {
         deleteFirstNetizen(LN, P);
-    } else if (next(P) = NIL) {
+    } else if (next(P) == NIL) {
         deleteLastNetizen(LN, P);
     } else {
         adrNetizen PreN = first(LN);
