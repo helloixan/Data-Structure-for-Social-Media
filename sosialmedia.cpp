@@ -22,6 +22,7 @@ adrGroup createElmGroup(infotypeGroup X){
     info(P) = X;
     info(P).Nmember = 0;
     next(P) = NIL;
+    prev(P) = NIL;
     relation(P) = NIL;
     return P;
 };
@@ -43,11 +44,27 @@ void addGroup(ListGroup &LG, adrGroup P){
             Q = next(Q);
         }
         next(Q) = P;
+        prev(P) = Q;
     }
     cout << "Group Berhasil Ditambahkan!" << endl;
 };
 
 void deleteGroup(ListGroup &LG, adrGroup &P){
+    // Menghapus grup berdasarkan posisinya serta mengeluarkan seluruh member dari grup
+    if (P == first(LG)){
+        deleteFirstGroup(LG, P);
+    } else if (P == last(LG)) {
+        deleteLastGroup(LG, P);
+    } else {
+        adrGroup PreG = first(LG);
+        while (next(PreG) != P) {
+            PreG = next(PreG);
+        }
+        deleteAfterGroup(LG, P, PreG);
+    }
+};
+
+void deleteFirstGroup(ListGroup &LG, adrGroup &P){
     // menghapus grup pada lIST MENGGUNAKAN delete first
     if (first(LG) == NIL) {
         cout << "Tidak ada Grup yang tersedia" << endl;
@@ -63,6 +80,34 @@ void deleteGroup(ListGroup &LG, adrGroup &P){
         next(P) = NIL;
     }
 };
+
+void deleteLastGroup(ListGroup &LG, adrGroup &P){
+    // menghapus grup pada lIST MENGGUNAKAN delete last
+    if (first(LG) == NIL) {
+        cout << "Tidak ada Grup yang tersedia" << endl;
+    } else if (next(first(LG)) == NIL) {
+        // hapus member yang ada di grup
+        P = first(LG);
+        next(P) = NIL;
+        first(LG) = NIL;
+    } else {
+        // hapus member yang ada di grup
+        P = last(LG);
+        last(LG) = prev(P);
+        prev(P) = NIL;
+        next(last(LG)) = NIL;
+    }
+};
+
+void deleteAfterGroup(ListGroup &LG, adrGroup &P, adrGroup Prec){
+    // menghapus grup pada lIST MENGGUNAKAN delete after
+    P = next(Prec);
+    next(Prec) = next(P);
+    prev(next(P)) = Prec;
+    next(P) = NIL;
+    prev(P) = NIL;
+};
+
 void addNetizen(ListNetizen &LN, adrNetizen P){
     // menambah netizen baru pada list (insert first)
     if (first(LN) == NIL) {
@@ -74,6 +119,21 @@ void addNetizen(ListNetizen &LN, adrNetizen P){
 };
 
 void deleteNetizen(ListNetizen &LN, adrNetizen &P){
+    // Menghapus netizen berdasarkan letaknya
+    if (P == first(LN)) {
+        deleteFirstNetizen(LN, P);
+    } else if (next(P) = NIL) {
+        deleteLastNetizen(LN, P);
+    } else {
+        adrNetizen PreN = first(LN);
+        while (next(PreN) != P) {
+            PreN = next(PreN);
+        }
+        deleteAfterNetizen(LN, P, PreN);
+    }
+};
+
+void deleteLastNetizen(ListNetizen &LN, adrNetizen &P){
     // menghapus netizen dari list, delete last
     if (first(LN) == NIL) {
         cout << "Tidak ada netizen" << endl;
@@ -86,6 +146,30 @@ void deleteNetizen(ListNetizen &LN, adrNetizen &P){
         }
         next(Q) = NIL;
     }
+};
+
+void deleteFirstNetizen(ListNetizen &LN, adrNetizen &P){
+    // menghapus netizen dari list, delete last
+    if (first(LN) == NIL) {
+        cout << "Tidak ada netizen" << endl;
+    } else if (next(first(LN)) == NIL) {
+        // hapus member yang ada di grup
+        P = first(LN);
+        next(P) = NIL;
+        first(LN) = NIL;
+    } else {
+        // hapus member yang ada di grup
+        P = first(LN);
+        first(LN) = next(P);
+        next(P) = NIL;
+    }
+};
+
+void deleteAfterNetizen(ListNetizen &LN, adrNetizen &P, adrNetizen Prec){
+    // menghapus grup pada lIST MENGGUNAKAN delete after
+    P = next(Prec);
+    next(Prec) = next(P);
+    next(P) = NIL;
 };
 
 // NON-PRIMITIF
