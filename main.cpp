@@ -197,33 +197,50 @@ int main()
                 case 7: {
                 cout << "=== DELETE GROUP ===" << endl << endl;
 
-                cout << "Menghapus grup urutan pertama" << endl;
+                do {
+                    cout << "masukan nama group: ";
+                    cin >> namaGroup;
+                    group = findGroupbyTitle(LG, namaGroup);
+                    if (group != NIL) {
+                        deleteGroup(LG, group);
+                        // Mengeluarkan semua member pada group
+                        member = relation(group);
+                        while (member != NIL) {
+                            netizen = nextNet(member);
+                            removeMember(group, netizen);
+                            member = relation(group);
+                        }
+                        cout << "Grup " << info(group).title << " Berhasil dihapus" << endl;
+                    } else {
+                        cout << "Group tidak ada, masukan nama grup yang valid! atau 'cancel' untuk membatalkan." << endl;
+                    }
+                } while (group == NIL && namaGroup != "cancel");
 
-                deleteGroup(LG, group);
-                // mengeluarkan seluruh member dari grup
-                member = relation(group);
-                while (member != NIL) {
-                    netizen = nextNet(member);
-                    removeMember(group, netizen);
-                    member = relation(group);
-                }
-                cout << "Grup " << info(group).title << " Berhasil dihapus" << endl;
                 break;
             }
                 case 8: {
                 cout << "=== DELETE NETIZEN ===" << endl << endl;
 
-                cout << "menghapus netizen terakhir" << endl;
-                deleteNetizen(LN, netizen);
-                // menghapus seluruh relasi dengan netizen
-                group = first(LG);
-                while (group != NIL) {
-                    if (isMember(group, netizen)) {
-                        removeMember(group, netizen);
+                do {
+                    cout << "masukan ID netizen: ";
+                    cin >> id;
+                    netizen = findNetizen(LN, id);
+                    if (netizen != NIL) {
+                        deleteNetizen(LN, netizen);
+                        // mengeluarkan netizen dari seluruh grup yang berelasi
+                        group = first(LG);
+                        while (group != NIL) {
+                            if (isMember(group, netizen)) {
+                                removeMember(group, netizen);
+                            }
+                            group = next(group);
+                        }
+                        cout << "Akun tersebut telah dihapus" << endl;
+                    } else {
+                        cout << "ID tersebut tidak ditemukan, harap memasukan ID yang valid! atau 'cancel' untuk membatalkan." << endl;
                     }
-                    group = next(group);
-                }
-                cout << "Akun tersebut telah dihapus" << endl;
+                } while (netizen == NIL && id != "cancel");
+
                 break;
             }
                 case 9: {
