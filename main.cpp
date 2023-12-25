@@ -11,26 +11,10 @@ int main()
     infotypeGroup dataGroup;
     int banyakData;
     string namaGroup, id;
-//    group grup;
-//    netizen Netizen;
-
-
+    
     welcome();
     createListGroup(LG);
     createListNetizen(LN);
-
-    //hardcode
-//    grup.title = "GDSC";
-//    grup.admin = "tidak ada";
-//    grup.maxMember = 100;
-//    addGroup(LG, createElmGroup(grup));
-//
-//    Netizen.id = "Iksan09";
-//    Netizen.nama = "Iksan";
-//    Netizen.noHP = "082384739857";
-//    Netizen.status = "JFKJAD";
-//    N = createElmNetizen(Netizen);
-//    addNetizen(LN, N);
 
 
     int inputMenu = selectMenu();
@@ -69,17 +53,22 @@ int main()
                 cout << "masukan banyaknya Grup: ";
                 cin >> banyakData;
 
-                for(int i = 1; i <= banyakData; i++){
+                for (int i = 1; i <= banyakData; i++){
                     cout << "masukan title: ";
                     cin >> dataGroup.title;
 
-                    cout << "masukan deskripsi group: ";
-                    cin >> dataGroup.desc;
+                    if (findGroupbyTitle(LG, dataGroup.title) != NIL) {
+                        cout << "Tidak dapat menggunakan nama grup yang sudah ada sebelumnya!" << endl;
+                        i--;
+                    } else {
+                        cout << "masukan deskripsi group: ";
+                        cin >> dataGroup.desc;
+                        cout << "masukan maksimal member: ";
+                        cin >> dataGroup.maxMember;
+                        group = createElmGroup(dataGroup);
+                        addGroup(LG, group);
+                    }
 
-                    cout << "masukan maksimal member: ";
-                    cin >> dataGroup.maxMember;
-                    group = createElmGroup(dataGroup);
-                    addGroup(LG, group);
                 }
                 break;
             }
@@ -260,6 +249,9 @@ int main()
                 cout << "=== MENAMPILKAN KESELURUHAN NETIZEN ===" << endl;
                 showAllNetizen(LN);
                 break;
+            }
+                default : {
+                cout << "Input menu tidak valid, harap masukan angka yang sesuai dengan menu!" << endl;
             }
         }
         cout << endl;
